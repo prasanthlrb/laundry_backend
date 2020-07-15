@@ -120,6 +120,8 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
             <li class="nav-item"><a href="/coupon"><i class="la la-la la-shopping-cart"></i><span class="menu-title">Coupon</span></a></li>
             @endif
 
+            <li class="nav-item"><a href="/push-notification"><i class="la la-la la-shopping-cart"></i><span class="menu-title">Push Notification</span></a></li>
+
             @if($role_get->order_read == 'on')
             <li class="nav-item"><a href="/order"><i class="la la la-cart-plus"></i><span class="menu-title">Orders</span></a></li>
             @endif

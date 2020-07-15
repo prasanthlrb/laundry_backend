@@ -125,6 +125,13 @@ Route::post('/update-schedule', 'ScheduleController@updateSchedule');
 Route::get('/edit-schedule/{id}', 'ScheduleController@editSchedule');
 Route::get('/delete-schedule/{id}', 'ScheduleController@deleteSchedule');
 
+//notification
+Route::POST('/save-notification', 'NotificationController@saveNotification');
+Route::POST('/update-notification', 'NotificationController@updateNotification');
+Route::get('/notification/{id}', 'NotificationController@editNotification');
+Route::get('/push-notification', 'NotificationController@Notification');
+Route::get('/notification-delete/{id}', 'NotificationController@deleteNotification');
+
 //city
 	// Route::POST('/save-city', 'AreaController@saveCity');
 	// Route::POST('/update-city', 'AreaController@updateCity');
