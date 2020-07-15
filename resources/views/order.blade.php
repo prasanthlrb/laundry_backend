@@ -247,6 +247,20 @@ $('#orderFilter').click(function(){
 
 
     }
+
+
+    function SendMail(id){
+
+      $.ajax({
+        url : 'invoice-send-mail/'+id,
+        type: "GET",
+        dataType: "JSON",
+        success: function(data)
+        {
+          toastr.success(data);
+        }
+      });
+    }
 </script>
 
 

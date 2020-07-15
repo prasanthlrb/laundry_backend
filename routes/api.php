@@ -49,7 +49,7 @@ Route::get('/get-order-details/{id}', 'ApiController@getOrderDetails');
 Route::get('/get-address-details/{id}', 'ApiController@getAddressDetails');
 Route::get('/service/{id}', 'ApiController@service');
 Route::get('/order-item/{id}', 'ApiController@orderItem');
-
+Route::get('/order-invoice/{id}', 'ApiController@invoiceSendMail');
 //Agent route
 Route::get('/get-item', 'ApiController@agentItem');
 Route::get('/get-service/{id}/{service}', 'ApiController@getService');

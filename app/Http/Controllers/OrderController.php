@@ -7,6 +7,7 @@ use App\category;
 use App\item;
 use App\agent;
 use App\customer;
+use App\manage_address;
 use App\order;
 use App\order_item;
 use App\service;
@@ -16,6 +17,7 @@ use Auth;
 use DB;
 use AppHelper;
 use PDF;
+use Mail;
 class OrderController extends Controller
 {
     public function __construct()
@@ -269,15 +271,52 @@ class OrderController extends Controller
     public function OrderPrint($id){
         $order = order::find($id);
         $order_item = order_item::where('order_id',$id)->get();
+        $address = manage_address::where('id',$order->address_id)->first();
         $customer = customer::find($order->customer_id);
         $item = item::all();
         $settings = settings::first();
 
 
-        $pdf = PDF::loadView('pdf.invoicepdf',compact('order','order_item','customer','item','settings'));
+        $pdf = PDF::loadView('pdf.invoicepdf',compact('order','order_item','customer','item','settings','address'));
         $pdf->setPaper('A4');
         return $pdf->stream('report.pdf');
 
     }
+
+
+    public function invoiceSendMail($id){
+        $order = order::find($id);
+        $order_item = order_item::where('order_id',$id)->get();
+        $address = manage_address::where('id',$order->address_id)->first();
+        $customer = customer::find($order->customer_id);
+        $item = item::all();
+        $settings = settings::first();
+
+        $pdf = PDF::loadView('pdf.invoicepdf',compact('order','order_item','customer','item','settings','address'));
+
+        try{
+            Mail::send('mail.invoice', compact('order','order_item','customer','item','settings','address'), function($message)use($order,$customer,$pdf) {
+            $message->to($customer->email)->subject('Hang Your Cloths Invoice ID : #'.$order->id);
+            $message->from('prasanthats@gmail.com','Hang Your Cloths');
+            $message->attachData($pdf->output(), 'hang_your_cloths_invoice_'.$order->id.'.pdf');
+            });
+        }catch(JWTException $exception){
+            $this->serverstatuscode = "0";
+            $this->serverstatusdes = $exception->getMessage();
+        }
+        if (Mail::failures()) {
+             $this->statusdesc  =   "Error sending mail";
+             $this->statuscode  =   "0";
+
+        }else{
+
+           $this->statusdesc  =   "Message sent Succesfully";
+           $this->statuscode  =   "1";
+        }
+        return response()->json('Mail Send Succesfully');
+    }
+
+
+
 
 }

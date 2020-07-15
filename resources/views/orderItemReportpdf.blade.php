@@ -29,51 +29,83 @@
   <div class="row">
     <div class="col-sm-12 col-md-12 col-lg-12">
     <table style="width: 100%;font-size: 12px;" class="table table-bordered table-sm">
-      <thead>
-        <tr>
-            <th>#</th>
+      @if(!empty($data))
+    
+    <?php $t_ids=array(); ?>
+    <?php $t_ids1=array(); $x = 0;  $y = 0 ; ?>
+    @foreach($data as $item)
+    <?php  $x++; ?>
+
+    @if(!in_array($item->order_id, $t_ids))
+    	<tr>
             <th>Invoice No</th>
             <th>Date</th>
             <th>Payment Status</th>
             <th>Payment Type</th>
-            <th>Sub Total</th>
             <th>Discount</th>
             <th>Delivery Type</th>
-            <th>Total</th>
         </tr>
-      </thead>
-      <tbody>
-      @foreach($data as $x => $row)
-          <tr>
+      <tr>
             <td>
-                {{$x+1}}
+                #{{$item->order_id}}
             </td>
             <td>
-                #{{$row->id}}
+                {{date('d-m-Y',strtotime($item->date))}}
             </td>
             <td>
-                {{date('d-m-Y',strtotime($row->date))}}
-            </td>
-            <td>
-                @if ($row->payment_status == 0)
+                @if ($item->payment_status == 0)
                   Un Paid
                 @else
                   Paid
                 @endif
             </td>
             <td>
-                @if ($row->payment_type == 0)
+                @if ($item->payment_type == 0)
                   Cash
                 @else
                   Online
                 @endif
             </td>
-            <td>{{$row->total}}</td>
-            <td>{{$row->coupon_value}}</td>
-            <td>{{$row->delivery_option}}</td>
-            <td>{{$row->total - $row->coupon_value}}</td>
+            <td>{{$item->coupon_value}}</td>
+            <td>{{$item->delivery_option}}</td>
           </tr>
+      <tr>
+        <th colspan="2">Item</th>
+        <th>Wash & Iron</th>
+        <th>Dry Clean</th>
+        <th>Iron</th>
+        <th>Total</th>
+      </tr>
+      <?php 
+    
+      $total_qty=0;
+      $total_balance=0;
+      ?>
+      @foreach($data as $item1)
+      @if($item->order_id == $item1->order_id)
+      <?php $y++; ?>
+      @endif
       @endforeach
+      <?php $t_ids1[]=$y; ?>
+    @endif
+    
+    <?php 
+    $t_ids[]=$item->order_id; 
+    
+    ?>
+      <tr>
+        
+        <td colspan="2">
+            {{$item->name}}
+        </td>
+        <td>{{$item->laundry_price}} * {{$item->laundry_qty}}</td>
+        <td>{{$item->dry_clean_price}} * {{$item->dry_clean_qty}}</td>
+        <td>{{$item->iron_price}} * {{$item->iron_qty}}</td>
+        <td>{{$item->total}}</td>
+      </tr>
+    @endforeach
+
+@endif
       </tbody>
     </table>
     </div>

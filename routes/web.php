@@ -52,6 +52,7 @@ Route::get('/get-item-price/{id}', 'OrderController@getItemPrice');
 Route::post('/save-item', 'OrderController@saveItem');
 
 Route::get('/order-print/{id}', 'OrderController@OrderPrint');
+Route::get('/invoice-send-mail/{id}', 'OrderController@invoiceSendMail');
 
 
 // coupon Management
@@ -107,6 +108,10 @@ Route::get('/ItemDelete/{id}','ServiceController@ItemDelete');
 
 Route::get('order-report', 'ReportController@viewOrderReport');
 Route::post('order-report', 'ReportController@getOrderReport');
+
+
+Route::get('order-item-report', 'ReportController@viewOrderItemReport');
+Route::post('order-item-report', 'ReportController@getOrderItemReport');
 
 
 

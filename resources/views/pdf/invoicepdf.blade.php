@@ -10,7 +10,7 @@
 
 <html style="border: 0; margin: 0; padding: 0;">
 <head>
-	<title>Invoice</title>
+  <title>Invoice</title>
 </head>
 <body style="border: 0; margin: 0; padding: 0;">
 <table border="0" cellspacing="0" cellpadding="0" width="100%" style="padding:0; margin: 0 auto;font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 13px;border-top: 8px solid #2D87BA; background: white;">
@@ -39,8 +39,18 @@
                     @if(!empty($settings->city))
                     {{$settings->city}}<br>
                     @endif
+                    @if(!empty($settings->pincode))
+                      {{$settings->pincode}}<br>
+                    @endif
+                    @if(!empty($settings->phone))
                       {{$settings->phone}}<br>
+                    @endif
+                    @if(!empty($settings->email))
                       {{$settings->email}}<br>
+                    @endif
+                    @if(!empty($settings->vat_number))
+                      {{$settings->vat_number}}<br>
+                    @endif
                     </span>
                   </div>
                 </div>
@@ -53,7 +63,12 @@
                         @if(!empty($customer))
                         <p style="font-size: 14px">
                           <b>{{$customer->name}}</b><br>
-                          <span id="tmp_billing_address" style="white-space: pre-wrap;">{{$customer->mobile}}<br>{{$customer->email}}
+                          @if(!empty($address))
+                          <span style="width:100px;" id="tmp_billing_address" style="white-space: pre-wrap;">{{$address->map_title}}<br>{{$address->area}}<br>{{$address->city}}
+                          </span>
+                          @endif
+                          <br><span id="tmp_billing_address" style="white-space: pre-wrap;">{{$customer->mobile}}<br>{{$customer->email}}
+                          </span>
                         </p>
                         @endif
                         <!--h3 style="font-size: 14px">SHIP TO:</h3>
@@ -69,6 +84,9 @@
                         <h3 style="font-size: 14px">{{$order->date}}</h3>
                         <p style="font-size: 14px">Invoice Number:</p>
                         <h3 style="font-size: 13px;word-wrap:break-word;max-width: 170px"><span id="tmp_entity_number"><b> #{{$order->id}}</b></span></h3>
+                        @if(!empty($order->delivery_option))
+                        <h3 style="font-size: 13px;word-wrap:break-word;max-width: 170px"><span id="tmp_entity_number"><b>{{strtoupper($order->delivery_option)}} DELIVERY</b></span></h3>
+                        @endif
                       </td>
                       
                     </tr>
@@ -77,13 +95,13 @@
                 <table border="0" cellspacing="0" cellpadding="0" width="100%" style="font-family: Verdana, Arial, Helvetica, sans-serif;color:#000; font-size: 12px;">
                   <thead style="text-transform: uppercase;color:#fff; padding: 10px 10px 10px 10px; background: #2d87ba; border-right: 2px solid white;">
                     <tr>
-                      <td style="font-weight:bold;border-bottom:2px solid #EDEDED;  padding: 10px 5px 20px 40px;" width="1%">#</td>
-                      <td style="font-weight:bold;border-bottom:1px solid #EDEDED;  padding: 10px 5px 20px 40px;" width="25%">Item</td>
-                      <td style="font-weight:bold;border-bottom:1px solid #dde9ef;  padding: 10px 5px 20px" width="17%">Wash & Iron</td>
-                      <td style="font-weight:bold;border-bottom:1px solid #dde9ef;  padding: 10px 5px 20px;" width="17%">Dry Clean</td>
+                      <td style="font-weight:bold;border-bottom:2px solid #EDEDED;  padding: 10px 10px 10px 10px;" width="1%">#</td>
+                      <td style="font-weight:bold;border-bottom:1px solid #EDEDED;  padding: 10px 10px 10px 10px;" width="25%">Item</td>
+                      <td style="font-weight:bold;border-bottom:1px solid #dde9ef;  padding: 10px 10px 10px 10px;" width="17%">Wash & Iron</td>
+                      <td style="font-weight:bold;border-bottom:1px solid #dde9ef;  padding: 10px 10px 10px 10px;" width="17%">Dry Clean</td>
                       
-                      <td style="font-weight:bold;border-bottom:1px solid #dde9ef;  padding: 10px 5px 20px;" width="17%">Iron</td>
-                      <td style="font-weight:bold;border-bottom:1px solid #2d87ba; padding: 7px 40px 20px 0; text-align: right;" width="20%">Total</td>
+                      <td style="font-weight:bold;border-bottom:1px solid #dde9ef;  padding: 10px 10px 10px 10px;" width="17%">Iron</td>
+                      <td style="font-weight:bold;border-bottom:1px solid #2d87ba; padding: 10px 10px 10px 10px; text-align: right;" width="20%">Total</td>
                     </tr>
                   </thead>
                   <tbody id="lineItem">
@@ -97,10 +115,10 @@
                       </td>
                       <td style="border-bottom:1px solid #EDEDED; padding: 7px 5px 7px 40px; font-size: 12px;">
                         <span id="tmp_item_name" style="word-wrap: break-word;">@foreach($item as $item1)
-		                @if($row->item_id == $item1->id)
-		                {{$item1->name}}
-		                @endif
-		                @endforeach</span>
+                    @if($row->item_id == $item1->id)
+                    {{$item1->name}}
+                    @endif
+                    @endforeach</span>
                         <br>
                       </td>
                       <td style="border-bottom:1px solid #EDEDED; padding: 7px 5px; font-size: 12px;" valign="top">
@@ -140,8 +158,53 @@
                       <td style="border-bottom:1px solid #EDEDED; border-bottom:1px solid #dde9ef;border-top:1px solid #dde9ef;padding: 10px 5px; color:#2d87ba; font-size: 13px"><b>Total</b></td>
                       <td style="border-bottom:1px solid #2d87ba;border-top:1px solid #2d87ba;padding: 10px 40px 10px 0; text-align: right; color:#2d87ba; font-size: 13px"  id="tmp_balance_due"><b>AED {{$total}}</b></td>
                     </tr>
+                    <tr>
+                      <td colspan="4" style="border-bottom:1px solid #EDEDED; padding: 10px 5px;border-bottom:1px solid #dde9ef;border-top:1px solid #dde9ef;">
+                        @if($order->payment_status == 0)
+                          <h4 style="color: #FF0000;font-size: 24px;margin-left: 100px;">UN PAID</h4>
+                        @else
+                          <h4 style="color: #32CD32;font-size: 24px;margin-left: 100px;">PAID</h4>
+                        @endif
+                      </td>
+                      <td colspan="2" style="border-bottom:1px solid #EDEDED; border-bottom:1px solid #dde9ef;border-top:1px solid #dde9ef;padding: 5px 5px; color:#2d87ba; font-size: 13px">
+                        @if($order->payment_status == 1)
+                        @if($order->payment_type == 0)
+                          <h5 style="color: #32CD32;font-size: 14px;margin-left: 100px;">Cash on Delivery (COD)</h5>
+                        @endif
+                        @endif
+                      </td>
+                    </tr>
                   </tbody>
                 </table>
+
+              @if($order->payment_type == 1)
+                <table border="0" cellspacing="0" cellpadding="0" width="100%" style="font-family: Verdana, Arial, Helvetica, sans-serif;color:#000; font-size: 12px;">
+                  <thead style="text-transform: uppercase;color:#fff; padding: 5px 5px 5px 5px; background: #2d87ba; border-right: 1px solid white;">
+                    <tr>
+                      <td style="font-weight:bold;border-bottom:2px solid #EDEDED;  padding: 10px 10px 10px 10px;" width="25%">Transaction Date</td>
+                      <td style="font-weight:bold;border-bottom:1px solid #EDEDED;  padding: 10px 10px 10px 10px;" width="25%">Gateway</td>
+                      <td style="font-weight:bold;border-bottom:1px solid #dde9ef;  padding: 10px 10px 10px 10px;" width="25%">Transaction ID</td>
+                      <td style="font-weight:bold;border-bottom:1px solid #dde9ef;  padding: 10px 10px 10px 10px;" width="25%">Amount</td>
+                    </tr>
+                  </thead>
+                  <tbody id="lineItem">
+                    <tr>
+                      <td style="border-bottom:1px solid #EDEDED; padding: 7px 5px 7px 40px; font-size: 12px;">
+                        
+                      </td>
+                      <td style="border-bottom:1px solid #EDEDED; padding: 7px 5px 7px 40px; font-size: 12px;">
+                        <br>
+                      </td>
+                      <td style="border-bottom:1px solid #EDEDED; padding: 7px 5px; font-size: 12px;" valign="top">
+                        <span id="tmp_item_qty"></span>
+                      </td>
+                      <td style="border-bottom:1px solid #EDEDED; padding: 7px 5px; font-size: 12px;" valign="top">
+                        <span id="tmp_item_qty"></span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              @endif
 
 <style media="print">
     #invoice-footer {

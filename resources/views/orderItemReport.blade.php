@@ -33,7 +33,7 @@
                         <a href="#" class="list-group-item">Porta ac consectetur ac</a>
                         <a href="#" class="list-group-item">Vestibulum at eros</a>
                       </div> -->
-                    <form target="_blank" method="post" action="/order-report">
+                    <form target="_blank" method="post" action="/order-item-report">
                     {{csrf_field()}}
                       <div class="row">
                         <div class="form-group col-sm-3 col-md-3">
@@ -111,9 +111,8 @@
   type="text/javascript"></script>
   <script src="../../../app-assets/vendors/js/pickers/daterange/daterangepicker.js"
   type="text/javascript"></script>
+
 <script>
-
-
 $('.report').addClass('active');
 $('.singledate').daterangepicker({
   singleDatePicker: true,

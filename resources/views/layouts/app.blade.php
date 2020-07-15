@@ -137,9 +137,17 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                 <li class="nav-item"><a href="/settings"><span class="menu-title">Settings</span></a></li>
               </ul>
             </li>
-            @if($role_get->order_report == 'on')
-            <li class="nav-item"><a href="/order-report"><i class="la la-la la-bar-chart"></i><span class="menu-title">Reports</span></a></li>
-            @endif
+
+            <li class=" nav-item"><a href="#"><i class="la la-la la-bar-chart"></i><span class="menu-title">Reports</span></a>
+              <ul class="menu-content">
+                @if($role_get->order_report == 'on')
+                <li class="nav-item"><a href="/order-report"><span class="menu-title">Order Reports</span></a></li>
+                @endif
+                @if($role_get->order_report == 'on')
+                <li class="nav-item"><a href="/order-item-report"><span class="menu-title">Order Item Reports</span></a></li>
+                @endif
+              </ul>
+            </li>
       </ul>
     </div>
   </div>
