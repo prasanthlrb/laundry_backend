@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jul 14, 2020 at 05:33 PM
--- Server version: 10.1.37-MariaDB
--- PHP Version: 7.2.13
+-- Host: localhost:3306
+-- Generation Time: Jul 15, 2020 at 03:31 PM
+-- Server version: 5.7.28
+-- PHP Version: 5.6.40
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `laundry_backend`
+-- Database: `hangyourc_app`
 --
 
 -- --------------------------------------------------------
@@ -65,7 +65,7 @@ CREATE TABLE `areas` (
 --
 
 INSERT INTO `areas` (`id`, `area_name`, `city_name`, `created_at`, `updated_at`) VALUES
-(1, 'Al Zahiyah and Al Markaziyah', 'Abu Dhabi', NULL, '2020-07-14 06:49:43'),
+(1, 'Al Zahiyah and Al Markaziyah\r\n', 'Abu Dhabi', NULL, NULL),
 (2, 'Madinat Zayed', 'Abu Dhabi', NULL, NULL),
 (3, 'Al Wahda', 'Abu Dhabi', NULL, NULL),
 (4, 'Khalidiya', 'Abu Dhabi', NULL, NULL),
@@ -130,15 +130,14 @@ INSERT INTO `cities` (`id`, `city_name`, `created_at`, `updated_at`) VALUES
 CREATE TABLE `coupons` (
   `id` int(10) UNSIGNED NOT NULL,
   `coupon_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `start_date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `end_date` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `discount_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `discount_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `service_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `amount` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `max_value` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `min_order_value` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `limit_per_user` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `limit_per_user` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `limit_per_coupon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -151,10 +150,9 @@ CREATE TABLE `coupons` (
 -- Dumping data for table `coupons`
 --
 
-INSERT INTO `coupons` (`id`, `coupon_code`, `description`, `start_date`, `end_date`, `discount_type`, `service_id`, `amount`, `max_value`, `min_order_value`, `limit_per_user`, `limit_per_coupon`, `user_type`, `user_id`, `min_order_val`, `created_at`, `updated_at`) VALUES
-(1, 'July Offers', 'This Offers only for July Month, Per User One Coupon Only', '2020-07-03', '2020-07-03', '3', '', '50', NULL, NULL, '1', '20', '0', '', NULL, '2020-07-02 19:54:27', '2020-07-02 19:54:27'),
-(2, 'AugOffer', 'this Offer Only For August Register Customer Only', '2020-07-03', '2020-07-13', '4', '', '10', '3000', NULL, '1', '200', '1', '8,9,12,10', NULL, '2020-07-02 20:33:43', '2020-07-02 20:33:43'),
-(3, 'Code 100', 'Terms and Conditions', '2020-07-14', '2020-07-15', '4', NULL, '5', NULL, NULL, '2', NULL, '1', '1', '50', '2020-07-13 09:21:32', '2020-07-13 09:24:30');
+INSERT INTO `coupons` (`id`, `coupon_code`, `description`, `start_date`, `end_date`, `discount_type`, `service_id`, `amount`, `max_value`, `limit_per_user`, `limit_per_coupon`, `user_type`, `user_id`, `min_order_val`, `created_at`, `updated_at`) VALUES
+(1, 'July Offers', 'This Offers only for July Month, Per User One Coupon Only', '2020-07-03', '2020-07-03', '3', '', '50', NULL, '1', '20', '0', '', NULL, '2020-07-02 19:54:27', '2020-07-02 19:54:27'),
+(2, 'AugOffer', 'this Offer Only For August Register Customer Only', '2020-07-03', '2020-07-13', '4', '', '10', '3000', '1', '200', '1', '8,9,12,10,13', NULL, '2020-07-02 20:33:43', '2020-07-02 20:33:43');
 
 -- --------------------------------------------------------
 
@@ -190,7 +188,15 @@ INSERT INTO `customers` (`id`, `name`, `email`, `mobile`, `password`, `token_id`
 (9, 'Aravindkumar R', 'aravind.0216@gmail.com', '7904497927', '$2y$10$KUX2VjQzdZyt9GuVpVFR1ujdhLg2hUmyPET4GLvYCGJMUWsiZgvfy', '261952', NULL, '2020-04-28 10:45:50', '2020-04-28 10:45:50'),
 (10, 'prasanth', 'prasanthats@gmail.com', '7010384622', '$2y$10$yX/oI3CprG8bTMomidgFQ.yWq.hGC3SAYI02FD9gbU1zgCx3ASdl6', '678081', '367405', '2020-04-28 11:58:35', '2020-06-12 14:39:06'),
 (11, 'ali', 'alialqubaisi91@gmail.com', '0589996914', '$2y$10$KlxvXTfDAc6vbffUlnsgyewoy9JLyHeUP5DrN.M7JW8sF1afpwx3i', '681728', NULL, '2020-04-28 12:21:00', '2020-04-28 12:21:00'),
-(12, 'Prasad', 'prasanthats1@gmail.com', NULL, '$2y$10$enRDp7cxnw6wjMJH1SJgOu.L.W9T2JuWjTV5TlPrdvBSQI.Qqk2G6', '890663', NULL, '2020-07-04 23:41:44', '2020-07-04 23:41:44');
+(12, 'Prasad', 'prasanthats1@gmail.com', NULL, '$2y$10$enRDp7cxnw6wjMJH1SJgOu.L.W9T2JuWjTV5TlPrdvBSQI.Qqk2G6', '890663', NULL, '2020-07-04 23:41:44', '2020-07-04 23:41:44'),
+(13, 'john nijo', 'johnnijomail@gmail.com', '0564180384', '$2y$10$/RfqRFoMbKDXwC13nUQHv.f5tqTFajzq3cB/1i9yS5SC0FTeHk85.', '369181', NULL, '2020-07-12 09:28:06', '2020-07-12 09:28:06'),
+(14, 'Mohamed Thowsif', 'thowsif@lrbinfotech.com', '0568169568', '$2y$10$.Hkf7nCeXxLdNrCq2.4mTOstwQ5Ob4yslQX5BWdbfgBD1IP9c25Ke', '533105', NULL, '2020-07-12 10:12:50', '2020-07-12 10:12:50'),
+(15, 'heba', 'heba.alhamed@gmail.com', '0509092847', '$2y$10$C5aifiiF9IY9Afqrk56fJeFf8QHfJf7rbRHB1NMEZ7qRVTxLeROh.', '584943', NULL, '2020-07-12 13:44:55', '2020-07-12 13:44:55'),
+(16, 'abdulla', 'trigger770@outlook.com', '0501401201', '$2y$10$Z2nIF6Q6Koq58tB5vvuaSOOdMeT2k.BcLIFdwXjQBAL57LjfzH6eu', '296778', NULL, '2020-07-13 03:22:15', '2020-07-13 03:22:15'),
+(17, 'abdulla', 'trigger770@outlook.com', '0501401201', '$2y$10$AlsZYmHb0nOMrSy7lk8DAOmsYrtHjSlaJryasjyHL72hIBcWsmwKi', '177679', NULL, '2020-07-13 03:22:15', '2020-07-13 03:22:15'),
+(18, 'alpha', 'show', NULL, '$2y$10$.CPO4J/HsP4coPA/yehYTezAdVB922kOPwemAHM77te6xZ9.1hl3y', '490834', NULL, '2020-07-13 04:21:04', '2020-07-13 04:21:04'),
+(19, 'salemalmansoori', 's109s@hotmail.com', '0507688891', '$2y$10$SOTjPV0P1VRAh7CxgUuBoer07wVQBf4TDV70kgykTLcaMOsGob1K6', '210514', NULL, '2020-07-13 18:46:47', '2020-07-13 18:46:47'),
+(20, 'ashika', 'ashikamrf71@gmail.com', NULL, '$2y$10$Udg7BCIPw3RVmcOhWNScWuIHk9tCct8yLo6xJWa2n.yYrMhD8Xuoy', '172098', NULL, '2020-07-14 00:50:47', '2020-07-14 00:50:47');
 
 -- --------------------------------------------------------
 
@@ -215,8 +221,7 @@ CREATE TABLE `home_sliders` (
 INSERT INTO `home_sliders` (`id`, `position`, `image`, `title`, `text`, `created_at`, `updated_at`) VALUES
 (2, '2', '1457089469.png', NULL, NULL, '2020-04-10 08:45:04', '2020-04-26 18:53:30'),
 (4, '1', '136878640.png', 'Special Covid19 Pack', 'Order Soon Limited Offer Only!', '2020-04-10 08:56:49', '2020-07-03 02:07:34'),
-(5, '3', '737990969.png', NULL, NULL, '2020-04-26 18:53:41', '2020-04-26 18:53:41'),
-(6, '4', '1021627942.jpg', 'Covid 19 Pack', 'we Pick up your Door Step', '2020-07-03 02:05:40', '2020-07-03 02:05:40');
+(5, '3', '737990969.png', NULL, NULL, '2020-04-26 18:53:41', '2020-04-26 18:53:41');
 
 -- --------------------------------------------------------
 
@@ -284,7 +289,7 @@ INSERT INTO `items` (`id`, `name`, `image`, `created_at`, `updated_at`) VALUES
 (45, 'Kandura (Winter)', '1896149878.png', '2020-04-24 11:06:30', '2020-04-24 15:31:57'),
 (46, 'Bath Mat (Big)', '1035635821.gif', '2020-04-24 11:21:47', '2020-04-24 15:45:27'),
 (47, 'Suit Jacket', '1499301435.png', '2020-04-24 11:08:24', '2020-04-24 15:33:13'),
-(48, 'Tracksuit Jacket', '1980600102.png', '2020-04-24 11:08:40', '2020-04-24 15:33:35'),
+(48, 'Tracksuit Jacket', '1070822925.png', '2020-04-24 11:08:40', '2020-07-13 00:39:44'),
 (49, 'Bed Sheet (Single)', '1163528206.png', '2020-04-24 11:09:10', '2020-04-24 15:33:52'),
 (50, 'Punjabi', '1271333069.png', '2020-04-24 11:11:16', '2020-04-24 15:34:14'),
 (51, 'Saree', '1609084622.png', '2020-04-24 11:11:25', '2020-04-24 15:34:39'),
@@ -302,7 +307,9 @@ INSERT INTO `items` (`id`, `name`, `image`, `created_at`, `updated_at`) VALUES
 (63, 'Bath Mat (Small)', '1987816630.gif', '2020-04-24 11:38:18', '2020-04-24 16:04:39'),
 (64, 'Sweater/Pullover', '1692627401.png', '2020-04-24 11:39:48', '2020-04-24 16:07:30'),
 (65, 'Bath Mat (Medium)', '2143046435.gif', '2020-04-24 11:40:03', '2020-04-24 16:08:19'),
-(66, 'Bathrobe', '231056472.png', '2020-04-24 11:40:11', '2020-04-24 16:08:48');
+(66, 'Bathrobe', '231056472.png', '2020-04-24 11:40:11', '2020-04-24 16:08:48'),
+(68, 'ashika', '2005066818.png', '2020-07-14 00:16:20', '2020-07-14 00:16:20'),
+(69, 'test 12', '1676773148.jpg', '2020-07-14 00:41:46', '2020-07-14 00:41:46');
 
 -- --------------------------------------------------------
 
@@ -334,7 +341,12 @@ CREATE TABLE `manage_addresses` (
 --
 
 INSERT INTO `manage_addresses` (`id`, `map_title`, `lat`, `lng`, `addr_type`, `addr_title`, `address1`, `address2`, `address3`, `customer_id`, `phone`, `city`, `area`, `status`, `created_at`, `updated_at`) VALUES
-(33, '311 Hamdan Bin Mohammed St - Al HisnAl Markaziyah West - Abu Dhabi - United Arab Emirates', '24.4843261', '54.35485079999999', 'apt', 'dalma plaza', '123', NULL, NULL, '10', NULL, 'Abu Dhabi', 'Al Rowdah and Al Mushrif', NULL, '2020-07-11 13:06:19', '2020-07-11 13:07:28');
+(33, '311 Hamdan Bin Mohammed St - Al HisnAl Markaziyah West - Abu Dhabi - United Arab Emirates', '24.4843261', '54.35485079999999', 'apt', 'dalma plaza', '123', NULL, NULL, '10', NULL, 'Abu Dhabi', 'Al Rowdah and Al Mushrif', NULL, '2020-07-11 13:06:19', '2020-07-11 13:07:28'),
+(34, '25 شارع رَأس مْشَيْرِب - Zone 1E3-01 - Abu Dhabi - United Arab Emirates', '24.4862052', '54.3592676', 'apt', 'dalma plaza', '1210', NULL, NULL, '13', '0564180348', 'Abu Dhabi', 'Al Zahiyah and Al Markaziyah', NULL, '2020-07-12 09:30:36', '2020-07-12 09:30:36'),
+(36, 'Hamdan Street, UAE Exchange Building, Opposite DU,Second floor - Hamdan Bin Mohammed St - Zone 1E3-01 - Abu Dhabi - United Arab Emirates', '24.4865221', '54.35975910000001', 'office', 'uae exchange building', '0105', 'first floor', NULL, '13', '0564180384', 'Abu Dhabi', 'Al Zahiyah and Al Markaziyah', NULL, '2020-07-12 09:31:53', '2020-07-12 09:31:53'),
+(37, 'Hamdan Bin Mohammed St - Salmen Tower - Zone 1شرق 3-01 - أبو ظبي - United Arab Emirates', '24.4860954', '54.3592755', 'villa', 'Dalma plaza', 'Hamdan street', '1208', NULL, '14', '0568169568', 'Abu Dhabi', 'Madinat Zayed', NULL, '2020-07-12 10:13:56', '2020-07-12 10:13:56'),
+(38, 'Unnamed Road - Jazeerat Zarkoh - United Arab Emirates', '24.8933114', '53.0788272', 'apt', '12', 'ف', 'ف', NULL, '11', 'ت', 'Abu Dhabi', 'Madinat Zayed', NULL, '2020-07-12 11:56:30', '2020-07-12 11:56:30'),
+(39, 'Almería, Spain', '36.834047', '-2.4637136', 'apt', '12', '45', NULL, NULL, '18', NULL, 'Abu Dhabi', 'Khalidiya', NULL, '2020-07-13 04:23:02', '2020-07-13 04:23:02');
 
 -- --------------------------------------------------------
 
@@ -374,8 +386,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2020_04_24_110335_create_manage_addresses_table', 6),
 (20, '2020_05_03_135559_create_items_table', 7),
 (21, '2020_07_09_105623_create_cities_table', 8),
-(22, '2020_07_09_105640_create_areas_table', 9),
-(23, '2020_07_14_101007_create_settings_table', 10);
+(22, '2020_07_09_105640_create_areas_table', 9);
 
 -- --------------------------------------------------------
 
@@ -469,7 +480,7 @@ CREATE TABLE `orders` (
   `pickup_driver_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `delivery_driver_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `total` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `payment_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_type` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT '0',
   `pickup_date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `pickup_time` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `delivery_date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -491,7 +502,17 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `customer_id`, `date`, `agent_id`, `pickup_driver_id`, `delivery_driver_id`, `total`, `payment_type`, `pickup_date`, `pickup_time`, `delivery_date`, `delivery_time`, `address_id`, `status`, `created_at`, `updated_at`, `delivery_option`, `coupon_id`, `coupon_value`, `coupon_code`, `remark`, `payment_status`) VALUES
-(64, '10', '2020-07-14', NULL, NULL, NULL, '50.0', NULL, 'Jul 12', '10:00 am - 12:00 pm', NULL, NULL, '33', '0', '2020-07-11 13:35:55', '2020-07-11 13:35:55', 'standard', '2', '5.0', 'AugOffer', 'Plz quick', 0);
+(64, '10', NULL, NULL, NULL, NULL, '50.0', NULL, 'Jul 12', '10:00 am - 12:00 pm', NULL, NULL, '33', '0', '2020-07-11 13:35:55', '2020-07-11 13:35:55', 'standard', '2', '5.0', 'AugOffer', 'Plz quick', 0),
+(65, '13', NULL, NULL, NULL, NULL, '82.0', NULL, 'Jul 13', '11:00 AM - 12:00 PM', NULL, NULL, '34', '0', '2020-07-12 09:35:02', '2020-07-12 09:35:02', 'express', '2', '8.0', 'AugOffer', 'my first order #testing', 0),
+(66, '13', NULL, NULL, NULL, NULL, '0.0', NULL, 'Jul 17', '08:00 am - 10:00 am', NULL, NULL, '34', '0', '2020-07-12 09:36:39', '2020-07-12 09:36:39', 'standard', 'null', '0.0', NULL, NULL, 0),
+(67, '10', NULL, NULL, NULL, NULL, '10.0', NULL, 'Jul 13', '11:00 AM - 12:00 PM', NULL, NULL, '33', '0', '2020-07-12 10:09:21', '2020-07-12 10:09:21', 'standard', 'null', '0.0', NULL, 'hello', 0),
+(68, '14', NULL, NULL, NULL, NULL, '31.0', NULL, 'Jul 13', '11:00 AM - 12:00 PM', NULL, NULL, '37', '0', '2020-07-12 10:15:32', '2020-07-12 10:15:32', 'standard', 'null', '0.0', 'July offers', 'pls collect my cloths my immediately', 0),
+(69, '11', NULL, NULL, NULL, NULL, '0.0', NULL, 'Jul 13', '11:00 AM - 12:00 PM', NULL, NULL, '38', '0', '2020-07-12 11:57:09', '2020-07-12 11:57:09', 'standard', 'null', '0.0', NULL, NULL, 0),
+(70, '11', NULL, NULL, NULL, NULL, '41.0', NULL, 'Jul 13', '08:00 am - 10:00 am', NULL, NULL, '38', '0', '2020-07-12 11:58:21', '2020-07-12 11:58:21', 'standard', 'null', '0.0', 'hyc', NULL, 0),
+(71, '11', NULL, NULL, NULL, NULL, '41.0', NULL, 'Jul 13', '08:00 am - 10:00 am', NULL, NULL, '38', '0', '2020-07-12 11:58:22', '2020-07-12 11:58:22', 'standard', 'null', '0.0', 'hyc', NULL, 0),
+(72, '13', NULL, NULL, NULL, NULL, '180.0', NULL, 'Jul 13', '11:00 AM - 12:00 PM', NULL, NULL, '34', '0', '2020-07-13 07:25:38', '2020-07-13 07:25:38', 'standard', 'null', '0.0', NULL, NULL, 0),
+(73, '13', NULL, NULL, NULL, NULL, '214.0', NULL, 'Jul 13', '11:00 AM - 12:00 PM', NULL, NULL, '36', '0', '2020-07-13 07:27:26', '2020-07-13 07:27:26', 'standard', 'null', '0.0', NULL, NULL, 0),
+(74, '10', NULL, '1', NULL, NULL, '25.0', NULL, 'Jul 13', '11:00 AM - 12:00 PM', NULL, NULL, '33', '0', '2020-07-13 10:28:47', '2020-07-14 00:47:22', 'standard', 'null', '0.0', NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -557,7 +578,23 @@ INSERT INTO `order_items` (`id`, `date`, `order_id`, `service_id`, `qty`, `price
 (32, NULL, '63', NULL, NULL, NULL, '2020-07-11 10:21:47', '2020-07-11 10:21:47', '2', '5', '8', '3', '1', '0', '0', '5.0', NULL),
 (33, NULL, '63', NULL, NULL, NULL, '2020-07-11 10:21:47', '2020-07-11 10:21:47', '4', '-', '8', '-', '0', '1', '0', '8.0', NULL),
 (34, NULL, '64', NULL, NULL, NULL, '2020-07-11 13:35:58', '2020-07-11 13:35:58', '1', '10', '15', '6', '4', '0', '0', '40.0', NULL),
-(35, NULL, '64', NULL, NULL, NULL, '2020-07-11 13:35:58', '2020-07-11 13:35:58', '2', '5', '8', '3', '2', '0', '0', '10.0', NULL);
+(35, NULL, '64', NULL, NULL, NULL, '2020-07-11 13:35:58', '2020-07-11 13:35:58', '2', '5', '8', '3', '2', '0', '0', '10.0', NULL),
+(36, NULL, '65', NULL, NULL, NULL, '2020-07-12 09:35:03', '2020-07-12 09:35:03', '1', '20', '30', '12', '2', '1', '1', '82.0', NULL),
+(37, NULL, '67', NULL, NULL, NULL, '2020-07-12 10:09:22', '2020-07-12 10:09:22', '1', '10', '15', '6', '1', '0', '0', '10.0', NULL),
+(38, NULL, '68', NULL, NULL, NULL, '2020-07-12 10:15:33', '2020-07-12 10:15:33', '1', '10', '15', '6', '1', '1', '1', '31.0', NULL),
+(39, NULL, '70', NULL, NULL, NULL, '2020-07-12 11:58:22', '2020-07-12 11:58:22', '1', '10', '15', '6', '2', '1', '1', '41.0', NULL),
+(40, NULL, '71', NULL, NULL, NULL, '2020-07-12 11:58:23', '2020-07-12 11:58:23', '1', '10', '15', '6', '2', '1', '1', '41.0', NULL),
+(41, NULL, '72', NULL, NULL, NULL, '2020-07-13 07:25:39', '2020-07-13 07:25:39', '39', '10', '20', '-', '2', '0', '0', '20.0', NULL),
+(42, NULL, '72', NULL, NULL, NULL, '2020-07-13 07:25:39', '2020-07-13 07:25:39', '1', '10', '15', '6', '5', '0', '0', '50.0', NULL),
+(43, NULL, '72', NULL, NULL, NULL, '2020-07-13 07:25:39', '2020-07-13 07:25:39', '42', '6', '15', '4', '5', '0', '0', '30.0', NULL),
+(44, NULL, '72', NULL, NULL, NULL, '2020-07-13 07:25:39', '2020-07-13 07:25:39', '45', '8', '15', '5', '10', '0', '0', '80.0', NULL),
+(45, NULL, '73', NULL, NULL, NULL, '2020-07-13 07:27:27', '2020-07-13 07:27:27', '16', '5', '6', '3', '0', '2', '0', '12.0', NULL),
+(46, NULL, '73', NULL, NULL, NULL, '2020-07-13 07:27:27', '2020-07-13 07:27:27', '43', '10', '15', '6', '0', '1', '0', '15.0', NULL),
+(47, NULL, '73', NULL, NULL, NULL, '2020-07-13 07:27:28', '2020-07-13 07:27:28', '51', '12', '12', '6', '0', '5', '0', '60.0', NULL),
+(48, NULL, '73', NULL, NULL, NULL, '2020-07-13 07:27:28', '2020-07-13 07:27:28', '6', '-', '8', '-', '0', '2', '0', '16.0', NULL),
+(49, NULL, '73', NULL, NULL, NULL, '2020-07-13 07:27:28', '2020-07-13 07:27:28', '32', '20', '30', '6', '0', '3', '0', '90.0', NULL),
+(50, NULL, '73', NULL, NULL, NULL, '2020-07-13 07:27:28', '2020-07-13 07:27:28', '64', '5', '7', '-', '0', '3', '0', '21.0', NULL),
+(51, NULL, '74', NULL, NULL, NULL, '2020-07-13 10:28:48', '2020-07-13 10:28:48', '1', '10', '15', '6', '1', '1', '0', '25.0', NULL);
 
 -- --------------------------------------------------------
 
@@ -708,14 +745,11 @@ INSERT INTO `services` (`id`, `cat_id`, `item_id`, `price_1`, `duration_1`, `pri
 (37, '1', '39', '20', NULL, '40', NULL, '2020-04-24 10:57:36', '2020-05-06 00:03:06'),
 (38, '1', '58', '20', NULL, '40', NULL, '2020-04-24 11:00:50', '2020-05-06 00:03:06'),
 (40, '1', '40', '15', NULL, '30', NULL, '2020-04-24 11:02:32', '2020-05-06 00:03:06'),
-(41, '1', '48', '15', NULL, '30', NULL, '2020-04-24 11:02:52', '2020-05-06 00:03:06'),
 (42, '1', '42', '15', NULL, '30', NULL, '2020-04-24 11:03:23', '2020-05-06 00:03:06'),
 (43, '1', '43', '15', NULL, '30', NULL, '2020-04-24 11:04:39', '2020-05-06 00:03:06'),
 (44, '1', '44', '15', NULL, '30', NULL, '2020-04-24 11:06:16', '2020-05-06 00:03:06'),
 (45, '1', '45', '15', NULL, '30', NULL, '2020-04-24 11:06:30', '2020-05-06 00:03:06'),
 (46, '1', 'Officer Uniform', '15', NULL, '30', NULL, '2020-04-24 11:07:11', '2020-04-24 15:32:32'),
-(47, '1', '48', '15', NULL, '30', NULL, '2020-04-24 11:08:24', '2020-05-06 00:03:07'),
-(48, '1', '48', '15', NULL, '30', NULL, '2020-04-24 11:08:40', '2020-05-06 00:03:07'),
 (49, '1', '49', '12', NULL, '24', NULL, '2020-04-24 11:09:10', '2020-05-06 00:03:07'),
 (50, '1', '50', '12', NULL, '24', NULL, '2020-04-24 11:11:16', '2020-05-06 00:03:07'),
 (51, '1', '51', '12', NULL, '24', NULL, '2020-04-24 11:11:25', '2020-05-06 00:03:07'),
@@ -732,11 +766,9 @@ INSERT INTO `services` (`id`, `cat_id`, `item_id`, `price_1`, `duration_1`, `pri
 (62, '2', '39', '10', NULL, '20', NULL, '2020-04-24 11:18:32', '2020-05-06 00:03:07'),
 (63, '2', '1', '10', NULL, '20', NULL, '2020-04-24 11:19:00', '2020-05-06 00:03:07'),
 (64, '2', '40', '10', NULL, '20', NULL, '2020-04-24 11:19:13', '2020-05-06 00:03:07'),
-(65, '2', '48', '10', NULL, '20', NULL, '2020-04-24 11:19:24', '2020-05-06 00:03:08'),
 (66, '2', '43', '10', NULL, '20', NULL, '2020-04-24 11:19:36', '2020-05-06 00:03:08'),
 (67, '2', 'Officer Uniform', '10', NULL, '20', NULL, '2020-04-24 11:20:20', '2020-04-24 15:43:25'),
 (68, '2', '48', '10', NULL, '20', NULL, '2020-04-24 11:20:39', '2020-05-06 00:03:08'),
-(69, '2', '48', '10', NULL, '20', NULL, '2020-04-24 11:20:49', '2020-05-06 00:03:08'),
 (70, '2', '52', '10', NULL, '20', NULL, '2020-04-24 11:21:38', '2020-05-06 00:03:08'),
 (71, '2', '46', '10', NULL, '20', NULL, '2020-04-24 11:21:47', '2020-05-06 00:03:08'),
 (72, '2', '57', '10', NULL, '20', NULL, '2020-04-24 11:21:59', '2020-05-06 00:03:08'),
@@ -761,14 +793,12 @@ INSERT INTO `services` (`id`, `cat_id`, `item_id`, `price_1`, `duration_1`, `pri
 (91, '2', 'Officer Uniform Trouser/Pants', '5', NULL, '10', NULL, '2020-04-24 11:30:12', '2020-04-24 15:57:09'),
 (92, '2', '5', '5', NULL, '10', NULL, '2020-04-24 11:30:21', '2020-05-06 00:03:09'),
 (93, '2', 'salwar/kameez 2pc', '5', NULL, '10', NULL, '2020-04-24 11:30:30', '2020-04-24 15:59:07'),
-(94, '2', '48', '5', NULL, '10', NULL, '2020-04-24 11:31:08', '2020-05-06 00:03:09'),
 (95, '2', 'Trouser/Pants', '5', NULL, '10', NULL, '2020-04-24 11:31:17', '2020-04-24 16:00:05'),
 (96, '2', 'Hijab/Scarf', '5', NULL, '10', NULL, '2020-04-24 11:31:28', '2020-04-24 16:00:23'),
 (97, '2', '11', '5', NULL, '10', NULL, '2020-04-24 11:33:16', '2020-05-06 00:03:09'),
 (98, '2', '12', '5', NULL, '10', NULL, '2020-04-24 11:33:33', '2020-05-06 00:03:09'),
 (99, '2', '13', '5', NULL, '10', NULL, '2020-04-24 11:34:11', '2020-05-06 00:03:09'),
 (100, '2', '14', '5', NULL, '10', NULL, '2020-04-24 11:34:22', '2020-05-06 00:03:09'),
-(101, '2', '16', '5', NULL, '10', NULL, '2020-04-24 11:34:41', '2020-05-06 00:03:09'),
 (102, '2', '16', '5', NULL, '10', NULL, '2020-04-24 11:35:02', '2020-05-06 00:03:09'),
 (103, '2', '62', '5', NULL, '10', NULL, '2020-04-24 11:35:12', '2020-05-06 00:03:09'),
 (104, '2', '53', '5', NULL, '10', NULL, '2020-04-24 11:35:23', '2020-05-06 00:03:10'),
@@ -840,28 +870,28 @@ INSERT INTO `services` (`id`, `cat_id`, `item_id`, `price_1`, `duration_1`, `pri
 --
 
 CREATE TABLE `settings` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` varchar(5000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `city` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `area` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `pincode` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `vat_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shop_license_code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shop_address` varchar(5000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `logo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `phone` varchar(255) DEFAULT NULL,
+  `address` varchar(5000) NOT NULL,
+  `city` varchar(255) DEFAULT NULL,
+  `area` varchar(255) DEFAULT NULL,
+  `pincode` varchar(255) DEFAULT NULL,
+  `vat_number` varchar(255) DEFAULT NULL,
+  `shop_license_code` varchar(255) DEFAULT NULL,
+  `shop_address` varchar(5000) DEFAULT NULL,
+  `logo` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `settings`
 --
 
 INSERT INTO `settings` (`id`, `name`, `email`, `phone`, `address`, `city`, `area`, `pincode`, `vat_number`, `shop_license_code`, `shop_address`, `logo`, `created_at`, `updated_at`) VALUES
-(1, 'Hang Your Cloths', 'admin@hangyourcloths.com', '+971 56 418 0385', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-14 10:02:14');
+(1, NULL, NULL, NULL, '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -1094,13 +1124,13 @@ ALTER TABLE `cities`
 -- AUTO_INCREMENT for table `coupons`
 --
 ALTER TABLE `coupons`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `home_sliders`
@@ -1112,19 +1142,19 @@ ALTER TABLE `home_sliders`
 -- AUTO_INCREMENT for table `items`
 --
 ALTER TABLE `items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=70;
 
 --
 -- AUTO_INCREMENT for table `manage_addresses`
 --
 ALTER TABLE `manage_addresses`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `oauth_clients`
@@ -1142,13 +1172,13 @@ ALTER TABLE `oauth_personal_access_clients`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -1172,7 +1202,7 @@ ALTER TABLE `services`
 -- AUTO_INCREMENT for table `settings`
 --
 ALTER TABLE `settings`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
