@@ -107,7 +107,7 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
             <li class="nav-item"><a href="/categories"><i class="la la-la la-archive"></i><span class="menu-title">Services</span></a></li>
             @endif
 
-            <li class="nav-item"><a href="/city"><i class="la la-la la-map"></i><span class="menu-title">Area</span></a></li>
+            <li class="nav-item"><a href="/area"><i class="la la-la la-map"></i><span class="menu-title">Area</span></a></li>
     
             @if($role_get->customer_read == 'on')
             <li class="nav-item"><a href="/customer"><i class="la la-la la-user"></i><span class="menu-title">Customer</span></a></li>
@@ -134,6 +134,7 @@ data-open="click" data-menu="vertical-menu-modern" data-col="2-columns">
                 @if($role_get->role_read == 'on')
                 <li class="nav-item"><a href="/role"><span class="menu-title">Roles</span></a></li>
                 @endif
+                <li class="nav-item"><a href="/settings"><span class="menu-title">Settings</span></a></li>
               </ul>
             </li>
             @if($role_get->order_report == 'on')

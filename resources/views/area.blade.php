@@ -18,7 +18,7 @@
         <div class="card">
           <div class="card-header">
             
-                <button id="open_model" data-backdrop="false" class="btn btn-success round btn-glow px-2" data-toggle="modal">Create Item</button>
+                <button id="open_model" data-backdrop="false" class="btn btn-success round btn-glow px-2" data-toggle="modal">Create Area</button>
          
             <div class="heading-elements">
                
@@ -38,20 +38,20 @@
                 <thead>
                   <tr>
                     <th>S.No</th>
-                    <th>Item</th>
-                    <th>Image</th>
+                    <th>City Name</th>
+                    <th>Area Name</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
                 </thead>
                 <tbody>
                 @php ($x = 0) @endphp
-                @foreach($item as $row)
+                @foreach($area as $row)
                 @php $x++ @endphp
                   <tr>
                     <td>{{$x}}</td>
-                    <td>{{$row->name}}</td>
-                    <td><img src="{{ asset("services/$row->image")}}" alt="" style="width:80px"></td>
+                    <td>{{$row->city_name}}</td>
+                    <td>{{$row->area_name}}</td>
                     <td class="text-center" onclick="Edit({{$row->id}})"><i class="ft-edit"></i></td>
                     <td class="text-center" onclick="Delete({{$row->id}})"><i class="ft-trash-2"></i></td>
                   </tr>
@@ -60,8 +60,8 @@
                 <tfoot>
                   <tr>
                     <th>S.No</th>
-                    <th>Item</th>
-                    <th>Image</th>
+                    <th>City Name</th>
+                    <th>Area Name</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
@@ -92,20 +92,20 @@
             <input type="hidden" name="id">
         <div class="modal-body">
           <div class="form-group row">
-            <label class="col-md-3 label-control" for="Item">Item</label>
+            <label class="col-md-3 label-control">City Name</label>
             <div class="col-md-9">
-              <input type="text" id="name" name="name" class="form-control" placeholder="Item">
+              <input type="text" id="city_name" name="city_name" class="form-control" placeholder="Item">
             </div>
           </div>
-          
+
           <div class="form-group row">
-            <label class="col-md-3 label-control" for="projectinput1">Item Image</label>
+            <label class="col-md-3 label-control">Area Name</label>
             <div class="col-md-9">
-              <input id="image" type="file" class="form-control" accept="image/*" name="image" />
-              <div id="preview"><img id="prevImage" style="width:120px;padding-top:20px;" src="" /></div><br>
+              <input type="text" id="area_name" name="area_name" class="form-control" placeholder="Item">
             </div>
           </div>
           
+         
         </div>
       </form>
         <div class="modal-footer">
@@ -136,18 +136,16 @@
   var action_type;
   $('#open_model').click(function(){
     $('#user_model').modal('show');
-    $('#prevImage').attr('src', '');
-    $('#prevImage1').attr('src', '');
     action_type = 1;
     $('#saveButton').text('Save');
-    $('#myModalLabel8').text('Create Item');
+    $('#myModalLabel8').text('Create Area');
   })
     function Save(){
       var formData = new FormData($('#user_form')[0]);
       if(action_type == 1){
 
         $.ajax({
-                url : 'ItemSave',
+                url : 'save-area',
                 type: "POST",
                 data: formData,
                 contentType: false,
@@ -159,7 +157,7 @@
                   $("#user_form")[0].reset();
                   $('#user_model').modal('hide');
                   $('.table').load(location.href+' .table');
-                  toastr.success('Item Store Successfully', 'Successfully Save');
+                  toastr.success('Area Store Successfully', 'Successfully Save');
                 },error: function (data, errorThrown) {
           var errorData = data.responseJSON.errors;
             //console.log(errorData);
@@ -175,7 +173,7 @@
         });
       }else{
         $.ajax({
-          url : 'ItemUpdate',
+          url : 'update-area',
           type: "POST",
           data: formData,
           contentType: false,
@@ -187,7 +185,7 @@
                   $("#user_form")[0].reset();
                   $('#user_model').modal('hide');
                   $('.table').load(location.href+' .table');
-                  toastr.success('Item Store Successfully', 'Successfully Updated');
+                  toastr.success('Area Store Successfully', 'Successfully Updated');
                 },error: function (data, errorThrown) {
           var errorData = data.responseJSON.errors;
             //console.log(errorData);
@@ -207,15 +205,15 @@
     function Edit(id){
       
       $.ajax({
-        url : 'ItemEdit/'+id,
+        url : 'edit-area/'+id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {
-          $('#myModalLabel8').text('Update Item');
+          $('#myModalLabel8').text('Update Area');
           $('#saveButton').text('Save Change');
-          $('input[name=name]').val(data.name);
-          $('#prevImage').attr('src', '/services/'+data.image);
+          $('input[name=area_name]').val(data.area_name);
+          $('input[name=city_name]').val(data.city_name);
           $('input[name=id]').val(data.id);
           $('#user_model').modal('show');
           action_type = 2;
@@ -226,12 +224,12 @@
       var r = confirm("Are you sure");
       if (r == true) {
       $.ajax({
-        url : 'ItemDelete/'+id,
+        url : 'area-delete/'+id,
         type: "GET",
         dataType: "JSON",
         success: function(data)
         {
-          toastr.success('Item Delete Successfully', 'Successfully Delete');
+          toastr.success('Area Delete Successfully', 'Successfully Delete');
           $('.table').load(location.href+' .table');
         }
       });

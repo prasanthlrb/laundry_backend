@@ -23,8 +23,9 @@ class CreateCouponsTable extends Migration
             $table->string('service_id')->nullable();
             $table->string('amount');
             $table->string('max_value')->nullable();
-            $table->string('limit_per_user');
-            $table->string('limit_per_coupon');
+            $table->string('min_order_value')->nullable();
+            $table->string('limit_per_user')->nullable();
+            $table->string('limit_per_coupon')->nullable();
             $table->string('user_type')->nullable();
             $table->string('user_id')->nullable();
             $table->timestamps();

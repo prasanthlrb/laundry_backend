@@ -11,7 +11,7 @@
 @section('section')
 <div class="content-wrapper">
 
-    <div class="content-body">     
+    <div class="content-body">
             <div class="row">
                     <div class="col-md-2">
                       <div class="form-group">
@@ -32,7 +32,7 @@
                               <!-- Floating button Regular with text -->
                               <a href="javascript:void(null)" id="orderFilter" class="btn btn-float btn-cyan"><i class="la la-filter"></i><span>Filter</span></a>
                               <a href="javascript:void(null)" id="orderAction" class="btn btn-float btn-float-lg btn-pink"><i class="la la-check-circle"></i><span>Action</span></a>
-                              <a href="javascript:void(null)" id="addAgent" class="btn btn-float btn-float-lg btn-pink"><i class="la la-check-circle"></i><span>Add Agent</span></a>
+                              {{-- <a href="javascript:void(null)" id="addAgent" class="btn btn-float btn-float-lg btn-pink"><i class="la la-check-circle"></i><span>Add Agent</span></a> --}}
                               <a href="#" id="page-reload" class="btn btn-float btn-cyan"><i class="la la-refresh"></i><span>refresh</span></a>
                             </div>
                           </div>
@@ -41,19 +41,19 @@
                         <a href="/admin/order-transport" class="btn btn-success mr-1">
                           <i class="la la-truck"></i> Go to Transport
                         </a>
-                            
+
                     </div> -->
-                  
+
             </div>
 <section id="column-selectors">
     <div class="row">
       <div class="col-12">
-        
+
         <div class="card">
-  
+
           <div class="card-content collapse show">
             <div class="card-body card-dashboard">
-             
+
               <table class="table table-striped table-bordered zero-configuration">
                 <thead>
                   <tr>
@@ -61,21 +61,23 @@
                     <th>Order ID</th>
                     <th>Customer</th>
                     <th>Agent</th>
+                    <th>Pickup Date</th>
                     <th>Payment Status</th>
                     <th>Order Status</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                        
+
                 </tbody>
-                
+
               </table>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section> 
+  </section>
 </div>
     </div>
   </div>
@@ -96,7 +98,7 @@
             {{ csrf_field() }}
             <input type="hidden" name="id" id="id">
         <div class="modal-body">
-          
+
           <div class="form-group row">
             <label class="col-md-3 label-control" for="Select Role">Select Role</label>
             <div class="col-md-9">
@@ -116,7 +118,7 @@
           <button type="button" onclick="Save()" id="saveButton" class="btn btn-outline-primary">Save changes</button>
         </div>
       </div>
-      
+
     </div>
   </div>
 @endsection
@@ -138,8 +140,10 @@ var orderPageTable = $('.zero-configuration').DataTable({
       { data: 'order_id', name: 'order_id' },
       { data: 'customer_details', name: 'customer_details' },
       { data: 'agent_details', name: 'agent_details' },
-      { data: 'payment_type', name: 'payment_type' },
+      { data: 'pickup_date', name: 'pickup_date' },
+      { data: 'payment_status', name: 'payment_status' },
       { data: 'order_status', name: 'order_status' },
+      { data: 'print', name: 'print' },
     ]
 });
 
@@ -194,7 +198,7 @@ $(document).on('click','#orderAction', function(){
 }else{
     toastr.error("Please select Any other Order Status");
 }
-});  
+});
 
 $('#orderFilter').click(function(){
     var orderStatus = $('#orderStatus').val();
@@ -208,7 +212,7 @@ $('#orderFilter').click(function(){
 
     function Save(){
 
-     
+
       var formData = new FormData($('#agent_form')[0]);
 // var id = $('#id').val();
 // alert(id);
@@ -221,7 +225,7 @@ $('#orderFilter').click(function(){
                 dataType: "JSON",
                 success: function(data)
                 {
-                  console.log(data);                
+                  console.log(data);
                   $("#agent_form")[0].reset();
                   $('#agent_model').modal('hide');
                   $('.zero-configuration').DataTable().ajax.reload();
@@ -233,15 +237,15 @@ $('#orderFilter').click(function(){
             //console.log(Object.keys(errorData).length);
             $.each(errorData, function(i, obj) {
               //console.log(obj[0]);
-              //console.log(i);  
+              //console.log(i);
               toastr.error(obj[0]);
           });
 
                 }
 
         });
-      
-      
+
+
     }
 </script>
 

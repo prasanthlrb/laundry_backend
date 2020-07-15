@@ -8,7 +8,7 @@
     <div class="content-body">
       <div class="row">
         <div class="col-xl-3 col-lg-6 col-12">
-          <div class="card pull-up">
+          <a href="/categories"><div class="card pull-up">
             <div class="card-content">
               <div class="card-body">
                 <div class="media d-flex">
@@ -23,10 +23,10 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div></a>
         </div>
         <div class="col-xl-3 col-lg-6 col-12">
-          <div class="card pull-up">
+            <a href="/customer"><div class="card pull-up">
             <div class="card-content">
               <div class="card-body">
                 <div class="media d-flex">
@@ -41,10 +41,10 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div></a>
         </div>
         <div class="col-xl-3 col-lg-6 col-12">
-          <div class="card pull-up">
+            <a href="/agent"><div class="card pull-up">
             <div class="card-content">
               <div class="card-body">
                 <div class="media d-flex">
@@ -59,10 +59,10 @@
                 </div>
               </div>
             </div>
-          </div>
+          </div></a>
         </div>
         <div class="col-xl-3 col-lg-6 col-12">
-          <div class="card pull-up">
+            <a href="/order"><div class="card pull-up">
             <div class="card-content">
               <div class="card-body">
                 <div class="media d-flex">
@@ -78,13 +78,13 @@
 
               </div>
             </div>
-          </div>
+          </div></a>
         </div>
       </div>
 
 
       <div class="row">
-         
+
             <div class="col-12 col-md-6">
                     <div class="card">
                       <div class="card-header">
@@ -94,15 +94,15 @@
                         <div class="card-body pt-0">
                           <div class="row">
                             <div class="col-md-6 col-12 border-right-blue-grey border-right-lighten-5 text-center">
-                                
+
                               <br>
                               <h4 class="font-large-2 text-bold-400">AED {{$current_total}}</h4>
                               <p class="blue-grey lighten-2 mb-0">Current Month</p>
                             </div>
                             <div class="col-md-6 col-12 text-center">
                               <br>
-                              <h4 class="font-large-2 text-bold-400">AED {{$previous_total}}</h4>
-                              <p class="blue-grey lighten-2 mb-0">Previous Month
+                              <h4 class="font-large-2 text-bold-400">AED {{$today_total}}</h4>
+                              <p class="blue-grey lighten-2 mb-0">Today
                                   </p>
                             </div>
                           </div>
@@ -110,13 +110,13 @@
                       </div>
                     </div>
                   </div>
-                 
+
         <div class="col-xl-6 col-12">
           <div class="row">
                 <div class="col-lg-6 col-12">
                         <div class="card">
                           <div class="card-header">
-                            <h4 class="card-title">Top Products of Month</h4>
+                            <h4 class="card-title">Top Services of Month</h4>
                             <a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 
                           </div>
@@ -125,8 +125,8 @@
                               <div class="table-responsive">
                                 <table class="table mb-0">
                                   <tbody>
-                                  
-                                      
+
+
                                   </tbody>
                                 </table>
                               </div>
@@ -134,7 +134,7 @@
                           </div>
                         </div>
                       </div>
-                     
+
             <div class="col-lg-6 col-12">
                     <div class="card">
                             <div class="card-header">
@@ -147,7 +147,7 @@
                                 <div class="table-responsive">
                                   <table class="table mb-0">
                                     <tbody>
-                     
+
                                     </tbody>
                                   </table>
                                 </div>
@@ -155,7 +155,7 @@
                             </div>
                           </div>
             </div>
-           
+
           </div>
 
         </div>

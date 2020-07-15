@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\home_slider;
 use App\agent;
+use App\settings;
 use Illuminate\Http\Request;
 use Auth;
 use DB;
@@ -153,6 +154,47 @@ class SettingController extends Controller
 
     public function cityModule(){
 
+    }
+
+
+    public function settings(){
+        $data = settings::find('1');
+        return view('settings',compact('data'));
+    }
+
+    public function updateSettings(Request $request){
+        if($request->logo!=""){
+            $old_image = "upload_image/".$request->logo;
+            if (file_exists($old_image)) {
+                @unlink($old_image);
+            }
+            //image upload
+            $fileName1 = null;
+            if($request->file('logo')!=""){
+            $image = $request->file('logo');
+            $fileName1 = rand() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('upload_image/'), $fileName1);
+            }
+        }
+        else
+        {
+            $fileName1 = $request->logo1;
+        }
+
+        $settings = settings::find($request->id);
+        $settings->name = $request->name;
+        $settings->phone = $request->phone;
+        $settings->email = $request->email;
+        $settings->city = $request->city;
+        $settings->area = $request->area;
+        $settings->address = $request->address;
+        $settings->pincode = $request->pincode;
+        $settings->vat_number = $request->vat_number;
+        $settings->shop_license_code = $request->shop_license_code;
+        $settings->shop_address = $request->shop_address;
+        $settings->logo = $fileName1;
+        $settings->save();
+        return back();
     }
 
 }

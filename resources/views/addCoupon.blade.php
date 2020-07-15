@@ -23,7 +23,7 @@
                         <div class="heading-elements">
                           <ul class="list-inline mb-0">
                             <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-                          
+
                             <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
 
                           </ul>
@@ -36,7 +36,7 @@
                         <div class="card-body">
                           <form class="form form-horizontal">
                             <div class="form-body">
-                              
+
                               <h4 class="form-section"><i class="ft-clipboard"></i> Coupons</h4>
                               <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput5">Coupon Code</label>
@@ -45,15 +45,15 @@
                                   name="coupon_code" id="coupon_code">
                                 </div>
                               </div>
-                                                            
+
                               <div class="form-group row">
                                 <label class="col-md-3 label-control" for="projectinput9">Description</label>
                                 <div class="col-md-9">
                                   <textarea rows="5" class="form-control" name="description" id="description" placeholder="Term & Conditions"></textarea>
                                 </div>
                               </div>
-                            
-                         
+
+
                                     <h4 class="form-section"><i class="la la-eye"></i> Coupon Usage Range</h4>
                                     <div class="row">
                                       <div class="col-md-6">
@@ -126,7 +126,7 @@
                                           </div>
                                         </div>
                                       </div>
-{{-- 
+{{--
                                       <div id="maxshow" class="col-md-6">
                                         <div class="form-group row">
                                           <label class="col-md-3 label-control" for="userinput3">Max Value</label>
@@ -135,9 +135,9 @@
                                           </div>
                                         </div>
                                       </div> --}}
-                                 
+
                                     </div>
-                                    
+
                                     <h4 class="form-section"><i class="ft-mail"></i> Usage Limits</h4>
                                     <div class="row">
                                       {{-- <div class="col-md-6">
@@ -208,14 +208,14 @@
                     </div>
                   </div>
                 </div>
-               
-             
-                
-              </section> 
-                
-         
-           
-            
+
+
+
+              </section>
+
+
+
+
 </div>
 </div>
 
@@ -283,7 +283,7 @@ function autoCall(){
           $('select[name=discount_type]').val(data.discount_type);
           $('select[name=user_type]').val(data.user_type);
           $('input[name=amount]').val(data.amount);
-          $('input[name=max_value]').val(data.max_value);
+          $('input[name=min_order_value]').val(data.min_order_val);
           $('input[name=limit_per_user]').val(data.limit_per_user);
           $('input[name=limit_per_coupon]').val(data.limit_per_coupon);
           $('input[name=id]').val(data.id);
@@ -322,7 +322,7 @@ function autoCall(){
 
 function get_coupon_service(id)
 {
-    $.ajax({        
+    $.ajax({
         url : '/get_coupon_service/'+id,
         type: "GET",
         success: function(data)
@@ -333,7 +333,7 @@ function get_coupon_service(id)
 }
 function get_coupon_user(id)
 {
-    $.ajax({        
+    $.ajax({
         url : '/get_coupon_user/'+id,
         type: "GET",
         success: function(data)
@@ -344,7 +344,7 @@ function get_coupon_user(id)
 }
   if(id==""){
     function Save(){
-      
+
       var formData = new FormData($('#coupon_form')[0]);
       $.ajax({
           url : '/CouponSave',
@@ -355,7 +355,7 @@ function get_coupon_user(id)
           dataType: "JSON",
           success: function(data)
           {
-            console.log(data);                
+            console.log(data);
             $("#coupon_form")[0].reset();
             //$('.table').load(location.href+' .table');
             toastr.success('Coupon Store Successfully', 'Successfully Save');
@@ -383,7 +383,7 @@ function get_coupon_user(id)
           dataType: "JSON",
           success: function(data)
           {
-            console.log(data);                
+            console.log(data);
             $("#coupon_form")[0].reset();
             //$('.table').load(location.href+' .table');
             toastr.success('Coupon Updated Successfully', 'Successfully Update');
@@ -405,7 +405,7 @@ function get_coupon_user(id)
   showDropdowns: true
 });
 
-    
+
 </script>
 
 @endsection

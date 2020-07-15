@@ -53,31 +53,12 @@
                           <h3 class="content-header-title">Customer</h3>
                           <select class="select2 form-control" name="customer">
                             <option value="">SELECT</option>
-                            @foreach($customer as $row)  
+                            @foreach($customer as $row)
                             <option value="{{$row->id}}">{{$row->name}}</option>
-                            @endforeach                                       
+                            @endforeach
                           </select>
                         </div>
-                        <div class="form-group col-sm-3 col-md-3">
-                          <h3 class="content-header-title">Agent</h3>
-                          <select class="select2 form-control" name="agent">
-                            <option value="">SELECT</option>
-                            @foreach($agent as $row)  
-                            <option value="{{$row->id}}">{{$row->name}}</option>
-                            @endforeach                                       
-                          </select>
-                        </div>
-                        <div class="form-group col-sm-3 col-md-3">
-                          <h3 class="content-header-title">Services</h3>
-                          <select class="select2 form-control" name="service">
-                            <option value="">SELECT</option>
-                            @foreach($service as $row)  
-                            <option value="{{$row->id}}">{{$row->name}}</option>
-                            @endforeach                                       
-                          </select>
-                        </div>
-                        
-                        
+
                         <div class="form-group col-sm-3 col-md-3">
                           <h3 class="content-header-title">Status</h3>
                           <select class="select2 form-control" name="status">
@@ -105,9 +86,9 @@
                   </div>
                 </div>
               </div>
-              
-       
-      
+
+
+
         </div>
       </div>
 </div>

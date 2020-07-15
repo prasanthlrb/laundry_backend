@@ -103,7 +103,7 @@ class ServiceController extends Controller
         $service->price_2 = $request->price_2;
         $service->duration_2 = $request->duration_2;
         $service->cat_id = $request->cat_id;
-        
+
         $service->save();
         return response()->json(['message' => 'Successfully Save'], 200);
     }
@@ -117,7 +117,7 @@ class ServiceController extends Controller
         $service->price_2 = $request->price_2;
         $service->duration_2 = $request->duration_2;
         //$service->cat_id = $request->cat_id;
-        
+
         $service->save();
         return response()->json(['message' => 'Successfully Save'], 200);
     }
@@ -125,7 +125,7 @@ class ServiceController extends Controller
     //edit Services
     public function editService($id){
         $service = service::find($id);
-        return response()->json($service);   
+        return response()->json($service);
     }
 
     //delete Services
@@ -141,7 +141,7 @@ class ServiceController extends Controller
                 ->where('id','=',Auth::user()->role_id)
                 ->get();
         $item = item::all();
-        return view('item',compact('item','role_get')); 
+        return view('item',compact('item','role_get'));
     }
 
     public function ItemSave(Request $request){
@@ -154,16 +154,16 @@ class ServiceController extends Controller
             if ($request->file('image') != "") {
                 $image = $request->file('image');
                 $item_image = rand() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('servicess/'), $item_image);
+                $image->move(public_path('services/'), $item_image);
             }
         $item->image = $item_image;
         $item->save();
-        return response()->json(['message'=>'Successfully Save'],200);  
+        return response()->json(['message'=>'Successfully Save'],200);
     }
-   
+
     public function ItemEdit($id){
         $item = item::find($id);
-        return response()->json($item); 
+        return response()->json($item);
     }
 
     public function ItemUpdate(Request $request){
@@ -176,18 +176,18 @@ class ServiceController extends Controller
             if ($request->file('image') != "") {
                 $image = $request->file('image');
                 $item_image = rand() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('servicess/'), $item_image);
+                $image->move(public_path('services/'), $item_image);
                 $item->image = $item_image;
             }
         $item->save();
-        return response()->json(['message'=>'Successfully Update'],200); 
+        return response()->json(['message'=>'Successfully Update'],200);
     }
 
     public function ItemDelete($id){
         $item = item::find($id);
         $item->delete();
-        return response()->json(['message'=>'Successfully Delete'],200); 
+        return response()->json(['message'=>'Successfully Delete'],200);
     }
 
-    
+
 }

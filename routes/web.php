@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 Route::get('/home', 'HomeController@dashboard')->name('home');
 Route::get('/dashboard', 'HomeController@dashboard')->name('dashboard');
-//services 
+//services
 Route::get('/categories', 'ServiceController@viewCategory');
 Route::get('/categories/{id}', 'ServiceController@editCategory');
 Route::get('/delete-categories/{id}', 'ServiceController@deleteCategory');
@@ -51,6 +51,8 @@ Route::get('/add-item/{id}', 'OrderController@addItem');
 Route::get('/get-item-price/{id}', 'OrderController@getItemPrice');
 Route::post('/save-item', 'OrderController@saveItem');
 
+Route::get('/order-print/{id}', 'OrderController@OrderPrint');
+
 
 // coupon Management
 Route::get('/coupon','CouponController@index');
@@ -72,14 +74,14 @@ Route::get('/UserEdit/{id}','UserController@UserEdit');
 Route::get('/UserDelete/{id}','UserController@UserDelete');
 
 // Role Management
-Route::get('/role','UserController@viewRole'); 
+Route::get('/role','UserController@viewRole');
 Route::post('/roleSave','UserController@roleSave');
 Route::post('/roleUpdate','UserController@roleUpdate');
 Route::get('/roleEdit/{id}','UserController@roleEdit');
 Route::get('/roleDelete/{id}','UserController@roleDelete');
 
 // HomeSlider Management
-Route::get('/homeSlider','SettingController@homeSlider'); 
+Route::get('/homeSlider','SettingController@homeSlider');
 Route::post('/sliderSave','SettingController@sliderSave');
 Route::post('/sliderUpdate','SettingController@sliderUpdate');
 Route::post('/changeSliderOrder','SettingController@changeSliderOrder');
@@ -108,6 +110,7 @@ Route::post('order-report', 'ReportController@getOrderReport');
 
 
 
+
 //week
 Route::get('/weeks', 'ScheduleController@showWeeks');
 
@@ -118,17 +121,21 @@ Route::get('/edit-schedule/{id}', 'ScheduleController@editSchedule');
 Route::get('/delete-schedule/{id}', 'ScheduleController@deleteSchedule');
 
 //city
-	Route::POST('/save-city', 'AreaController@saveCity');
-	Route::POST('/update-city', 'AreaController@updateCity');
-	Route::get('/city/{id}', 'AreaController@editCity');
-	Route::get('/city', 'AreaController@City');
-	Route::get('/city-delete/{id}', 'AreaController@deleteCity');
+	// Route::POST('/save-city', 'AreaController@saveCity');
+	// Route::POST('/update-city', 'AreaController@updateCity');
+	// Route::get('/city/{id}', 'AreaController@editCity');
+	// Route::get('/city', 'AreaController@City');
+	// Route::get('/city-delete/{id}', 'AreaController@deleteCity');
 
 	//area
 	Route::POST('/save-area', 'AreaController@saveArea');
 	Route::POST('/update-area', 'AreaController@updateArea');
 	Route::get('/edit-area/{id}', 'AreaController@editArea');
-	Route::get('/area/{id}', 'AreaController@Area');
+	Route::get('/area', 'AreaController@Area');
 	Route::get('/area-delete/{id}', 'AreaController@deleteArea');
+
+
+	Route::POST('/update-settings', 'SettingController@updateSettings');
+	Route::get('/settings', 'SettingController@settings');
 
 Auth::routes();

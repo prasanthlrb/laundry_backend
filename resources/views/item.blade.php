@@ -4,36 +4,36 @@
   <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/datatables.min.css">
   <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/extensions/buttons.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/datatable/buttons.bootstrap4.min.css">
-  
+
 @endsection
 @section('section')
 <div class="content-wrapper">
 
-    <div class="content-body">     
-   
+    <div class="content-body">
+
 <section id="column-selectors">
     <div class="row">
       <div class="col-12">
-        
+
         <div class="card">
           <div class="card-header">
-            
+
                 <button id="open_model" data-backdrop="false" class="btn btn-success round btn-glow px-2" data-toggle="modal">Create Item</button>
-         
+
             <div class="heading-elements">
-               
+
               <ul class="list-inline mb-0">
-                
+
                 <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
                 <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
                 <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-                
+
               </ul>
             </div>
           </div>
           <div class="card-content collapse show">
             <div class="card-body card-dashboard">
-             
+
               <table class="table table-striped table-bordered dataex-html5-selectors">
                 <thead>
                   <tr>
@@ -55,7 +55,7 @@
                     <td class="text-center" onclick="Edit({{$row->id}})"><i class="ft-edit"></i></td>
                     <td class="text-center" onclick="Delete({{$row->id}})"><i class="ft-trash-2"></i></td>
                   </tr>
-                @endforeach                  
+                @endforeach
                 </tbody>
                 <tfoot>
                   <tr>
@@ -72,7 +72,7 @@
         </div>
       </div>
     </div>
-  </section> 
+  </section>
 </div>
     </div>
   </div>
@@ -97,7 +97,7 @@
               <input type="text" id="name" name="name" class="form-control" placeholder="Item">
             </div>
           </div>
-          
+
           <div class="form-group row">
             <label class="col-md-3 label-control" for="projectinput1">Item Image</label>
             <div class="col-md-9">
@@ -105,7 +105,7 @@
               <div id="preview"><img id="prevImage" style="width:120px;padding-top:20px;" src="" /></div><br>
             </div>
           </div>
-          
+
         </div>
       </form>
         <div class="modal-footer">
@@ -155,7 +155,7 @@
                 dataType: "JSON",
                 success: function(data)
                 {
-                  console.log(data);                
+                  console.log(data);
                   $("#user_form")[0].reset();
                   $('#user_model').modal('hide');
                   $('.table').load(location.href+' .table');
@@ -166,7 +166,7 @@
             //console.log(Object.keys(errorData).length);
             $.each(errorData, function(i, obj) {
               //console.log(obj[0]);
-              //console.log(i);  
+              //console.log(i);
               toastr.error(obj[0]);
           });
 
@@ -183,7 +183,7 @@
           dataType: "JSON",
           success: function(data)
                 {
-                  console.log(data);                
+                  console.log(data);
                   $("#user_form")[0].reset();
                   $('#user_model').modal('hide');
                   $('.table').load(location.href+' .table');
@@ -194,18 +194,18 @@
             //console.log(Object.keys(errorData).length);
             $.each(errorData, function(i, obj) {
               //console.log(obj[0]);
-              //console.log(i);  
+              //console.log(i);
               toastr.error(obj[0]);
           });
 
                 }
       });
       }
-      
+
     }
 
     function Edit(id){
-      
+
       $.ajax({
         url : 'ItemEdit/'+id,
         type: "GET",
@@ -235,9 +235,9 @@
           $('.table').load(location.href+' .table');
         }
       });
-    } 
+    }
      }
-    
+
 </script>
 
 

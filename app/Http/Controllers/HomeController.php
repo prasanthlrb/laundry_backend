@@ -36,26 +36,30 @@ class HomeController extends Controller
 
     $cfdate = date('Y-m-d',strtotime('first day of this month'));
     $cldate = date('Y-m-d',strtotime('last day of this month'));
-    
+
     $pfdate = date('Y-m-d',strtotime('first day of previous month'));
     $pldate = date('Y-m-d',strtotime('last day of previous month'));
+
+    $today = date('Y-m-d');
 
     $current_total = DB::table("orders")->whereBetween('date', [$cfdate, $cldate])->get()->sum("total");
 
     $previous_total = DB::table("orders")->whereBetween('date', [$pfdate, $pldate])->get()->sum("total");
+
+    $today_total = DB::table("orders")->where('date', $today)->get()->sum("total");
 
         $drivers_count = agent::all()->count();
         $service_count = service::all()->count();
         $customer_count = customer::all()->count();
         $orders_count = order::all()->count();
 
-    $services = DB::table('order_items')
-    ->select(DB::raw('count(*) as s_id'))
-    ->whereBetween('date', [$cfdate, $cldate])
-    ->groupBy('item_id')
-    ->get();
+    // $services = DB::table('order_items')
+    // ->select(DB::raw('count(*) as s_id'))
+    // ->whereBetween('date', [$cfdate, $cldate])
+    // ->groupBy('item_id')
+    // ->get();
 
 
-        return view('dashboard',compact('drivers_count','service_count','customer_count','orders_count','current_total','previous_total'));
+        return view('dashboard',compact('drivers_count','service_count','customer_count','orders_count','current_total','previous_total','today_total'));
     }
 }

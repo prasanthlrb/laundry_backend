@@ -10,10 +10,12 @@ use App\customer;
 use App\order;
 use App\order_item;
 use App\service;
+use App\settings;
 use Yajra\DataTables\Facades\DataTables;
 use Auth;
 use DB;
 use AppHelper;
+use PDF;
 class OrderController extends Controller
 {
     public function __construct()
@@ -90,38 +92,38 @@ class OrderController extends Controller
             ->addColumn('order_id', function ($orders) {
                 return '<a href="/view-order/' . $orders->id . '" >#' . $orders->id . '</a>';
             })
-            ->addColumn('payment_type', function ($orders) {
-                if ($orders->payment_type == 1) {
-                    return '<td>Cash on Delivery</td>';
+            ->addColumn('payment_status', function ($orders) {
+                if ($orders->payment_status == 0) {
+                    return '<td>Un Paid</td>';
                 } else {
-                    return '<td>Online Payment</td>';
+                    return '<td>Paid</td>';
                 }
             })
             ->addColumn('order_status', function ($orders) {
 
                 if ($orders->status == 0) {
                     $status = '<b>Pending</b>';
-                } 
-                else if ($orders->status == 1) 
+                }
+                else if ($orders->status == 1)
                 {
                     $status = '<b>Confirmed</b>';
                 }
-                else if ($orders->status == 2) 
+                else if ($orders->status == 2)
                 {
                     $status = '<b>Picked Up</b>';
                 }
-                else if ($orders->status == 3) 
+                else if ($orders->status == 3)
                 {
                     $status = '<b>In Process</b>';
                 }
-                else if ($orders->status == 4) 
+                else if ($orders->status == 4)
                 {
                     $status = '<b>Shipped</b>';
-                } 
-                else if ($orders->status == 5) 
+                }
+                else if ($orders->status == 5)
                 {
                     $status = '<b>Delivered</b>';
-                } 
+                }
                 return '<td>
                 ' . $status . '
                 </td>';
@@ -130,6 +132,11 @@ class OrderController extends Controller
                 return '<td>
                 <p>' . $orders->name . '</p>
                 <p>' . $orders->mobile . '</p>
+                </td>';
+            })
+            ->addColumn('pickup_date', function ($orders) {
+                return '<td>
+                <p>' . $orders->pickup_date . '</p>
                 </td>';
             })
             ->addColumn('agent_details', function ($orders) {
@@ -146,8 +153,21 @@ class OrderController extends Controller
                 </td>';
                 }
             })
+            ->addColumn('print', function ($orders) {
+                return 
+                '<td><span class="dropdown">
+                  <button id="btnSearchDrop2" type="button" data-toggle="dropdown" aria-haspopup="true"
+                  aria-expanded="true" class="btn btn-primary dropdown-toggle dropdown-menu-right"><i class="ft-settings"></i></button>
+                  <span aria-labelledby="btnSearchDrop2" class="dropdown-menu mt-1 dropdown-menu-right">
+                    
+                    <a target="_blank" href="/order-print/'.$orders->id.'" class="dropdown-item"><i class="ft-print"></i> Print</a>
+                    <a href="javascript:void(null)" onclick="SendMail('.$orders->id.')" class="dropdown-item"><i class="ft-print"></i> Send Mail</a>
 
-            ->rawColumns(['order_id', 'payment_type', 'order_status', 'customer_details','agent_details', 'checkbox'])
+                  </span>
+                </span></td>';
+            })
+
+            ->rawColumns(['order_id','pickup_date', 'payment_status', 'order_status', 'customer_details','agent_details', 'checkbox','print'])
             ->make(true);
 
         //return Datatables::of($orders) ->addIndexColumn()->make(true);
@@ -181,7 +201,7 @@ class OrderController extends Controller
     public function saveItem(Request $request){
     $order_id;
     $total = 0;
-        for ($x=0; $x<count($_POST['item']); $x++) 
+        for ($x=0; $x<count($_POST['item']); $x++)
         {
             $order_item = new order_item;
             $order_id = $_POST['order_id'][$x];
@@ -243,6 +263,21 @@ class OrderController extends Controller
             $order->save();
         }
         return response()->json(["Successfully Update"], 200);
+    }
+
+
+    public function OrderPrint($id){
+        $order = order::find($id);
+        $order_item = order_item::where('order_id',$id)->get();
+        $customer = customer::find($order->customer_id);
+        $item = item::all();
+        $settings = settings::first();
+
+
+        $pdf = PDF::loadView('pdf.invoicepdf',compact('order','order_item','customer','item','settings'));
+        $pdf->setPaper('A4');
+        return $pdf->stream('report.pdf');
+
     }
 
 }

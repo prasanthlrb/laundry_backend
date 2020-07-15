@@ -1,14 +1,22 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.3
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:8889
--- Generation Time: Jul 13, 2020 at 01:22 PM
--- Server version: 5.7.26
--- PHP Version: 7.4.2
+-- Host: 127.0.0.1
+-- Generation Time: Jul 14, 2020 at 05:33 PM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.2.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Database: `laundry_backend`
@@ -57,7 +65,7 @@ CREATE TABLE `areas` (
 --
 
 INSERT INTO `areas` (`id`, `area_name`, `city_name`, `created_at`, `updated_at`) VALUES
-(1, 'Al Zahiyah and Al Markaziyah\r\n', 'Abu Dhabi', NULL, NULL),
+(1, 'Al Zahiyah and Al Markaziyah', 'Abu Dhabi', NULL, '2020-07-14 06:49:43'),
 (2, 'Madinat Zayed', 'Abu Dhabi', NULL, NULL),
 (3, 'Al Wahda', 'Abu Dhabi', NULL, NULL),
 (4, 'Khalidiya', 'Abu Dhabi', NULL, NULL),
@@ -129,8 +137,9 @@ CREATE TABLE `coupons` (
   `service_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `amount` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `max_value` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `min_order_value` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `limit_per_user` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `limit_per_coupon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `limit_per_coupon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `min_order_val` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -142,9 +151,10 @@ CREATE TABLE `coupons` (
 -- Dumping data for table `coupons`
 --
 
-INSERT INTO `coupons` (`id`, `coupon_code`, `description`, `start_date`, `end_date`, `discount_type`, `service_id`, `amount`, `max_value`, `limit_per_user`, `limit_per_coupon`, `user_type`, `user_id`, `min_order_val`, `created_at`, `updated_at`) VALUES
-(1, 'July Offers', 'This Offers only for July Month, Per User One Coupon Only', '2020-07-03', '2020-07-03', '3', '', '50', NULL, '1', '20', '0', '', NULL, '2020-07-02 19:54:27', '2020-07-02 19:54:27'),
-(2, 'AugOffer', 'this Offer Only For August Register Customer Only', '2020-07-03', '2020-07-13', '4', '', '10', '3000', '1', '200', '1', '8,9,12,10', NULL, '2020-07-02 20:33:43', '2020-07-02 20:33:43');
+INSERT INTO `coupons` (`id`, `coupon_code`, `description`, `start_date`, `end_date`, `discount_type`, `service_id`, `amount`, `max_value`, `min_order_value`, `limit_per_user`, `limit_per_coupon`, `user_type`, `user_id`, `min_order_val`, `created_at`, `updated_at`) VALUES
+(1, 'July Offers', 'This Offers only for July Month, Per User One Coupon Only', '2020-07-03', '2020-07-03', '3', '', '50', NULL, NULL, '1', '20', '0', '', NULL, '2020-07-02 19:54:27', '2020-07-02 19:54:27'),
+(2, 'AugOffer', 'this Offer Only For August Register Customer Only', '2020-07-03', '2020-07-13', '4', '', '10', '3000', NULL, '1', '200', '1', '8,9,12,10', NULL, '2020-07-02 20:33:43', '2020-07-02 20:33:43'),
+(3, 'Code 100', 'Terms and Conditions', '2020-07-14', '2020-07-15', '4', NULL, '5', NULL, NULL, '2', NULL, '1', '1', '50', '2020-07-13 09:21:32', '2020-07-13 09:24:30');
 
 -- --------------------------------------------------------
 
@@ -364,7 +374,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (19, '2020_04_24_110335_create_manage_addresses_table', 6),
 (20, '2020_05_03_135559_create_items_table', 7),
 (21, '2020_07_09_105623_create_cities_table', 8),
-(22, '2020_07_09_105640_create_areas_table', 9);
+(22, '2020_07_09_105640_create_areas_table', 9),
+(23, '2020_07_14_101007_create_settings_table', 10);
 
 -- --------------------------------------------------------
 
@@ -480,7 +491,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `customer_id`, `date`, `agent_id`, `pickup_driver_id`, `delivery_driver_id`, `total`, `payment_type`, `pickup_date`, `pickup_time`, `delivery_date`, `delivery_time`, `address_id`, `status`, `created_at`, `updated_at`, `delivery_option`, `coupon_id`, `coupon_value`, `coupon_code`, `remark`, `payment_status`) VALUES
-(64, '10', NULL, NULL, NULL, NULL, '50.0', NULL, 'Jul 12', '10:00 am - 12:00 pm', NULL, NULL, '33', '0', '2020-07-11 13:35:55', '2020-07-11 13:35:55', 'standard', '2', '5.0', 'AugOffer', 'Plz quick', 0);
+(64, '10', '2020-07-14', NULL, NULL, NULL, '50.0', NULL, 'Jul 12', '10:00 am - 12:00 pm', NULL, NULL, '33', '0', '2020-07-11 13:35:55', '2020-07-11 13:35:55', 'standard', '2', '5.0', 'AugOffer', 'Plz quick', 0);
 
 -- --------------------------------------------------------
 
@@ -825,6 +836,36 @@ INSERT INTO `services` (`id`, `cat_id`, `item_id`, `price_1`, `duration_1`, `pri
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(5000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `city` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `area` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pincode` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vat_number` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shop_license_code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shop_address` varchar(5000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `logo` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `name`, `email`, `phone`, `address`, `city`, `area`, `pincode`, `vat_number`, `shop_license_code`, `shop_address`, `logo`, `created_at`, `updated_at`) VALUES
+(1, 'Hang Your Cloths', 'admin@hangyourcloths.com', '+971 56 418 0385', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-14 10:02:14');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -1003,6 +1044,12 @@ ALTER TABLE `services`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -1047,7 +1094,7 @@ ALTER TABLE `cities`
 -- AUTO_INCREMENT for table `coupons`
 --
 ALTER TABLE `coupons`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -1077,7 +1124,7 @@ ALTER TABLE `manage_addresses`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `oauth_clients`
@@ -1122,6 +1169,12 @@ ALTER TABLE `services`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=165;
 
 --
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
@@ -1132,3 +1185,8 @@ ALTER TABLE `users`
 --
 ALTER TABLE `weeks`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
